@@ -223,6 +223,6 @@
   }; // End dropdown plugin
 
   $(document).ready(function(){
-    $('.dropdown-button').dropdown();
+    $('.mdp .dropdown-button').dropdown();
   });
 }( jQuery ));

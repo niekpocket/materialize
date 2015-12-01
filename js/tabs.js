@@ -124,6 +124,6 @@
   };
 
   $(document).ready(function(){
-    $('ul.tabs').tabs();
+    $('.mdp ul.tabs').tabs();
   });
 }( jQuery ));

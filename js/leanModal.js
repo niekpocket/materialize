@@ -26,10 +26,14 @@
       lStack = (++_stack);
 
       // Store a reference of the overlay
-      $overlay.attr('id', overlayID).css('z-index', 1000 + lStack * 2);
-      $modal.data('overlay-id', overlayID).css('z-index', 1000 + lStack * 2 + 1);
+      var $overlayContainer = $('<div class="mdp">');
+      $("body").append($overlayContainer);
 
-      $("body").append($overlay);
+      // Store a reference of the overlay
+      $overlay.attr('id', overlayID).css('z-index', 8000 + lStack * 2);
+
+      $modal.data('overlay-id', overlayID).css('z-index', 8000 + lStack * 2 + 1);
+      $overlayContainer.append($overlay);
 
       // Override defaults
       options = $.extend(defaults, options);

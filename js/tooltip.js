@@ -31,7 +31,7 @@
         // Create tooltip
         var newTooltip = $('<div></div>');
         newTooltip.addClass('material-tooltip').append(tooltip_text)
-          .appendTo($('body'))
+          .appendTo($('.mdp:first'))
           .attr('id', tooltipId);
 
         var backdrop = $('<div></div>').addClass('backdrop');
@@ -179,7 +179,7 @@
   };
 
   var repositionWithinScreen = function(x, y, width, height) {
-    var newX = x
+    var newX = x;
     var newY = y;
 
     if (newX < 0) {
@@ -198,6 +198,6 @@
   };
 
   $(document).ready(function(){
-     $('.tooltipped').tooltip();
+     $('.mdp .tooltipped').tooltip();
    });
 }( jQuery ));

@@ -263,7 +263,7 @@
 };
 
 $(document).ready(function(){
-  $('.materialboxed').materialbox();
+  $('.mdp .materialboxed').materialbox();
 });
 
 }( jQuery ));

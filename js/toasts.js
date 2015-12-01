@@ -6,9 +6,14 @@ Materialize.toast = function (message, displayLength, className, completeCallbac
     // Create toast container if it does not exist
     if (container === null) {
         // create notification container
+        var mdpContainer = document.createElement('div');
+        mdpContainer.className = "mdp";
+        document.body.appendChild(mdpContainer);
+
         container = document.createElement('div');
+        container.className = "mdp";
         container.id = 'toast-container';
-        document.body.appendChild(container);
+        mdpContainer.appendChild(container);
     }
 
     // Select and append toast

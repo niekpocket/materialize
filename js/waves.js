@@ -299,7 +299,7 @@
         }
 
         //Wrap input inside <i> tag
-        Effect.wrapInput($$('.waves-effect'));
+        Effect.wrapInput($$('.mdp .waves-effect'));
 
         if ('ontouchstart' in window) {
             document.body.addEventListener('touchstart', showEffect, false);

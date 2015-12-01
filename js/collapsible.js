@@ -132,6 +132,6 @@
   };
 
   $(document).ready(function(){
-    $('.collapsible').collapsible();
+    $('.mdp .collapsible').collapsible();
   });
 }( jQuery ));
