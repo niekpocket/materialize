@@ -51,6 +51,8 @@
             // Attach dropdown to its activator
             if (options.attachToActivator) {
                 origin.after(activates);
+            } if(!options.attachToActivator) {
+                activates.css('min-width', origin.width());
             }
 
             /*
