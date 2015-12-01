@@ -162,7 +162,7 @@ module.exports = function(grunt) {
         // the location of the resulting JS file
         dest: 'dist/js/materialize.js'
       },
-      temp: {
+      bin: {
         // the files to concatenate
         src: [
               "js/initial.js",
@@ -197,7 +197,7 @@ module.exports = function(grunt) {
               "js/carousel.js",
              ],
         // the location of the resulting JS file
-        dest: 'temp/js/materialize.js'
+        dest: 'bin/materialize.js'
       },
     },
 
@@ -217,7 +217,7 @@ module.exports = function(grunt) {
       },
       bin: {
         files: {
-          'bin/materialize.js': ['temp/js/materialize.js']
+          'bin/materialize.min.js': ['bin/materialize.js']
         }
       },
       extras: {
@@ -592,7 +592,7 @@ module.exports = function(grunt) {
   );
 
   grunt.registerTask('jade_compile', ['jade', 'notify:jade_compile']);
-  grunt.registerTask('js_compile', ['concat:temp', 'uglify:bin', 'notify:js_compile', 'clean:temp']);
+  grunt.registerTask('js_compile', ['concat:bin', 'uglify:bin', 'notify:js_compile', 'clean:temp']);
   grunt.registerTask('sass_compile', ['sass:gh', 'sass:bin', 'postcss:gh', 'postcss:bin', 'notify:sass_compile']);
   grunt.registerTask('server', ['browserSync', 'notify:server']);
   grunt.registerTask('lint', ['removelogging:source']);
