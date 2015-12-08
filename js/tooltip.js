@@ -30,11 +30,11 @@
 
         // Create tooltip
         var newTooltip = $('<div></div>');
-        newTooltip.addClass('material-tooltip').append(tooltip_text)
+        newTooltip.addClass('pmab-material-tooltip').append(tooltip_text)
           .appendTo($('.mdp:first'))
           .attr('id', tooltipId);
 
-        var backdrop = $('<div></div>').addClass('backdrop');
+        var backdrop = $('<div></div>').addClass('pmab-backdrop');
         backdrop.appendTo(newTooltip);
         backdrop.css({ top: 0, left:0 });
 
@@ -198,6 +198,6 @@
   };
 
   $(document).ready(function(){
-     $('.mdp .tooltipped').tooltip();
+     $('.mdp .pmab-tooltipped').tooltip();
    });
 }( jQuery ));

@@ -21,26 +21,26 @@
         // Initialize
         var view = $(this);
         // Don't double initialize.
-        if (view.hasClass('initialized')) {
+        if (view.hasClass('pmab-initialized')) {
           return true;
         }
 
         // Options
         if (options.full_width) {
           options.dist = 0;
-          imageHeight = view.find('.carousel-item img').first().load(function(){
+          imageHeight = view.find('.pmab-carousel-item img').first().load(function(){
             view.css('height', $(this).height());
           });
         }
 
-        view.addClass('initialized');
+        view.addClass('pmab-initialized');
         pressed = false;
         offset = target = 0;
         images = [];
-        item_width = view.find('.carousel-item').first().innerWidth();
+        item_width = view.find('.pmab-carousel-item').first().innerWidth();
         dim = item_width * 2 + options.padding;
 
-        view.find('.carousel-item').each(function () {
+        view.find('.pmab-carousel-item').each(function () {
           images.push($(this)[0]);
         });
 
@@ -192,7 +192,7 @@
             return false;
 
           } else if (!options.full_width) {
-            var clickedIndex = $(e.target).closest('.carousel-item').index();
+            var clickedIndex = $(e.target).closest('.pmab-carousel-item').index();
             var diff = (center % count) - clickedIndex;
 
             // Account for wraparound.

@@ -68,7 +68,7 @@
 
 
     // Dismissible Collections
-    $('.dismissable').each(function() {
+    $('.pmab-dismissable').each(function() {
       $(this).hammer({
         prevent_default: false
       }).bind('pan', function(e) {

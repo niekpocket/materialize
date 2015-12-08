@@ -67,7 +67,7 @@
 
             // Create ripple
             var ripple = document.createElement('div');
-            ripple.className = 'waves-ripple';
+            ripple.className = 'pmab-waves-ripple';
             el.appendChild(ripple);
 
             // Get click coordinate and element witdh
@@ -94,9 +94,9 @@
                 'left': relativeX+'px'
             };
 
-            ripple.className = ripple.className + ' waves-notransition';
+            ripple.className = ripple.className + ' pmab-waves-notransition';
             ripple.setAttribute('style', convertStyle(rippleStyle));
-            ripple.className = ripple.className.replace('waves-notransition', '');
+            ripple.className = ripple.className.replace('pmab-waves-notransition', '');
 
             // Scale the ripple
             rippleStyle['-webkit-transform'] = scale;
@@ -127,7 +127,7 @@
 
             // Get first ripple
             var ripple = null;
-            var ripples = el.getElementsByClassName('waves-ripple');
+            var ripples = el.getElementsByClassName('pmab-waves-ripple');
             if (ripples.length > 0) {
                 ripple = ripples[ripples.length - 1];
             } else {
@@ -186,13 +186,13 @@
                     var parent = el.parentNode;
 
                     // If input already have parent just pass through
-                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1) {
+                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('pmab-waves-effect') !== -1) {
                         continue;
                     }
 
                     // Put element class and style to the specified parent
                     var wrapper = document.createElement('i');
-                    wrapper.className = el.className + ' waves-input-wrapper';
+                    wrapper.className = el.className + ' pmab-waves-input-wrapper';
 
                     var elementStyle = el.getAttribute('style');
 
@@ -202,7 +202,7 @@
 
                     wrapper.setAttribute('style', elementStyle);
 
-                    el.className = 'waves-button-input';
+                    el.className = 'pmab-waves-button-input';
                     el.removeAttribute('style');
 
                     // Put element as child
@@ -259,10 +259,10 @@
         var target = e.target || e.srcElement;
 
         while (target.parentElement !== null) {
-            if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1) {
+            if (!(target instanceof SVGElement) && target.className.indexOf('pmab-waves-effect') !== -1) {
                 element = target;
                 break;
-            } else if (target.classList.contains('waves-effect')) {
+            } else if (target.classList.contains('pmab-waves-effect')) {
                 element = target;
                 break;
             }
@@ -299,7 +299,7 @@
         }
 
         //Wrap input inside <i> tag
-        Effect.wrapInput($$('.mdp .waves-effect'));
+        Effect.wrapInput($$('.mdp .pmab-waves-effect'));
 
         if ('ontouchstart' in window) {
             document.body.addEventListener('touchstart', showEffect, false);

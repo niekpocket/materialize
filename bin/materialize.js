@@ -310,12 +310,12 @@ if ($) {
 
       var $this = $(this);
 
-      var $panel_headers = $(this).find('> li > .collapsible-header');
+      var $panel_headers = $(this).find('> li > .pmab-collapsible-header');
 
       var collapsible_type = $this.data("collapsible");
 
       // Turn off any existing event handlers
-       $this.off('click.collapse', '.collapsible-header');
+       $this.off('click.collapse', '.pmab-collapsible-header');
        $panel_headers.off('click.collapse');
 
 
@@ -325,7 +325,7 @@ if ($) {
 
       // Accordion Open
       function accordionOpen(object) {
-        $panel_headers = $this.find('> li > .collapsible-header');
+        $panel_headers = $this.find('> li > .pmab-collapsible-header');
         if (object.hasClass('active')) {
             object.parent().addClass('active');
         }
@@ -333,14 +333,14 @@ if ($) {
             object.parent().removeClass('active');
         }
         if (object.parent().hasClass('active')){
-          object.siblings('.collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
         else{
-          object.siblings('.collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
 
-        $panel_headers.not(object).removeClass('active').parent().removeClass('active');
-        $panel_headers.not(object).parent().children('.collapsible-body').stop(true,false).slideUp(
+        $panel_headers.not(object).removeClass('pmab-active').parent().removeClass('active');
+        $panel_headers.not(object).parent().children('.pmab-collapsible-body').stop(true,false).slideUp(
           {
             duration: 350,
             easing: "easeOutQuart",
@@ -354,17 +354,17 @@ if ($) {
 
       // Expandable Open
       function expandableOpen(object) {
-        if (object.hasClass('active')) {
-            object.parent().addClass('active');
+        if (object.hasClass('pmab-active')) {
+            object.parent().addClass('pmab-active');
         }
         else {
-            object.parent().removeClass('active');
+            object.parent().removeClass('pmab-active');
         }
-        if (object.parent().hasClass('active')){
-          object.siblings('.collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+        if (object.parent().hasClass('pmab-active')){
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
         else{
-          object.siblings('.collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
       }
 
@@ -387,7 +387,7 @@ if ($) {
        */
       function getPanelHeader(object) {
 
-        return object.closest('li > .collapsible-header');
+        return object.closest('li > .pmab-collapsible-header');
       }
 
       /*****  End Helper Functions  *****/
@@ -395,7 +395,7 @@ if ($) {
 
 
       // Add click handler to only direct collapsible header children
-      $this.on('click.collapse', '> li > .collapsible-header', function(e) {
+      $this.on('click.collapse', '> li > .pmab-collapsible-header', function(e) {
         var $header = $(this),
             element = $(e.target);
 
@@ -403,26 +403,26 @@ if ($) {
           element = getPanelHeader(element);
         }
 
-        element.toggleClass('active');
+        element.toggleClass('pmab-active');
 
         if (options.accordion || collapsible_type === "accordion" || collapsible_type === undefined) { // Handle Accordion
           accordionOpen(element);
         } else { // Handle Expandables
           expandableOpen(element);
 
-          if ($header.hasClass('active')) {
+          if ($header.hasClass('pmab-active')) {
             expandableOpen($header);
           }
         }
       });
 
       // Open first active
-      var $panel_headers = $this.find('> li > .collapsible-header');
+      var $panel_headers = $this.find('> li > .pmab-collapsible-header');
       if (options.accordion || collapsible_type === "accordion" || collapsible_type === undefined) { // Handle Accordion
-        accordionOpen($panel_headers.filter('.active').first());
+        accordionOpen($panel_headers.filter('.pmab-active').first());
       }
       else { // Handle Expandables
-        $panel_headers.filter('.active').each(function() {
+        $panel_headers.filter('.pmab-active').each(function() {
           expandableOpen($(this));
         });
       }
@@ -431,7 +431,7 @@ if ($) {
   };
 
   $(document).ready(function(){
-    $('.mdp .collapsible').collapsible();
+    $('.mdp .pmab-collapsible').collapsible();
   });
 }( jQuery ));;(function ($) {
 
@@ -486,8 +486,6 @@ if ($) {
             // Attach dropdown to its activator
             if (options.attachToActivator) {
                 origin.after(activates);
-            } if(!options.attachToActivator) {
-                activates.css('min-width', origin.width());
             }
 
             /*
@@ -504,8 +502,8 @@ if ($) {
                 updateOptions();
 
                 // Set Dropdown state
-                activates.addClass('active');
-                origin.addClass('active');
+                activates.addClass('pmab-active');
+                origin.addClass('pmab-active');
 
                 // Constrain width
                 if (options.constrain_width === true) {
@@ -555,10 +553,10 @@ if ($) {
                 // Handle edge alignment
                 if (currAlignment === 'left') {
                     gutterSpacing = options.gutter;
-                    leftPosition = origin.position().left + gutterSpacing;
+                    leftPosition = origin.offset().left + gutterSpacing;
                 }
                 else if (currAlignment === 'right') {
-                    var offsetRight = origin.position().left + origin.outerWidth() - activates.outerWidth();
+                    var offsetRight = origin.offset().left + origin.outerWidth() - activates.outerWidth();
                     gutterSpacing = -options.gutter;
                     leftPosition = offsetRight + gutterSpacing;
                 }
@@ -567,7 +565,8 @@ if ($) {
                 activates.css({
                     position: 'absolute',
                     top: origin.position().top + verticalOffset,
-                    left: leftPosition
+                    left: leftPosition,
+                    "min-width": origin.width()
                 });
 
 
@@ -588,8 +587,8 @@ if ($) {
                 // Check for simultaneous focus and click events.
                 isFocused = false;
                 activates.fadeOut(options.outDuration);
-                activates.removeClass('active');
-                origin.removeClass('active');
+                activates.removeClass('pmab-active');
+                origin.removeClass('pmab-active');
                 setTimeout(function () {
                     activates.css('max-height', '');
                 }, options.outDuration);
@@ -609,7 +608,7 @@ if ($) {
                 origin.on('mouseleave', function (e) {
                     // If hover on origin then to something other than dropdown content, then close
                     var toEl = e.toElement || e.relatedTarget; // added browser compatibility for target element
-                    if (!$(toEl).closest('.dropdown-content').is(activates)) {
+                    if (!$(toEl).closest('.pmab-dropdown-content').is(activates)) {
                         activates.stop(true, true);
                         hideDropdown();
                         open = false;
@@ -618,7 +617,7 @@ if ($) {
 
                 activates.on('mouseleave', function (e) { // Mouse out
                     var toEl = e.toElement || e.relatedTarget;
-                    if (!$(toEl).closest('.dropdown-button').is(origin)) {
+                    if (!$(toEl).closest('.pmab-dropdown-button').is(origin)) {
                         activates.stop(true, true);
                         hideDropdown();
                         open = false;
@@ -631,18 +630,18 @@ if ($) {
                 origin.unbind('click.' + origin.attr('id'));
                 origin.bind('click.' + origin.attr('id'), function (e) {
                     if (!isFocused) {
-                        if (origin[0] == e.currentTarget && !origin.hasClass('active') &&
+                        if (origin[0] == e.currentTarget && !origin.hasClass('pmab-active') &&
                             ($(e.target).closest('.dropdown-content').length === 0)) {
                             e.preventDefault(); // Prevents button click from moving window
                             placeDropdown('click');
                         }
                         // If origin is clicked and menu is open, close menu
-                        else if (origin.hasClass('active')) {
+                        else if (origin.hasClass('pmab-active')) {
                             hideDropdown();
                             $(document).unbind('click.' + activates.attr('id') + ' touchstart.' + activates.attr('id'));
                         }
                         // If menu open, add click close handler to document
-                        if (activates.hasClass('active')) {
+                        if (activates.hasClass('pmab-active')) {
                             $(document).bind('click.' + activates.attr('id') + ' touchstart.' + activates.attr('id'), function (e) {
                                 if (!activates.is(e.target) && !origin.is(e.target) && (!origin.find(e.target).length)) {
                                     hideDropdown();
@@ -666,7 +665,7 @@ if ($) {
     }; // End dropdown plugin
 
     $(document).ready(function () {
-        $('.mdp .dropdown-button').dropdown();
+        $('.mdp .pmab-dropdown-button').dropdown();
     });
 }(jQuery));;(function($) {
     var _stack = 0,
@@ -692,7 +691,7 @@ if ($) {
       },
       overlayID = _generateID(),
       $modal = $(this),
-      $overlay = $('<div class="lean-overlay"></div>'),
+      $overlay = $('<div class="pmab-lean-overlay"></div>'),
       lStack = (++_stack);
 
       // Store a reference of the overlay
@@ -720,7 +719,7 @@ if ($) {
         });
       }
 
-      $modal.find(".modal-close").on('click.close', function(e) {
+      $modal.find(".pmab-modal-close").on('click.close', function(e) {
         $modal.closeModal(options);
       });
 
@@ -735,7 +734,7 @@ if ($) {
       $modal.data('associated-overlay', $overlay[0]);
 
       // Define Bottom Sheet animation
-      if ($modal.hasClass('bottom-sheet')) {
+      if ($modal.hasClass('pmab-bottom-sheet')) {
         $modal.velocity({bottom: "0", opacity: 1}, {
           duration: options.in_duration,
           queue: false,
@@ -783,14 +782,14 @@ if ($) {
       // Disable scrolling
       $('body').css('overflow', '');
 
-      $modal.find('.modal-close').off('click.close');
+      $modal.find('.pmab-modal-close').off('click.close');
       $(document).off('keyup.leanModal' + overlayID);
 
       $overlay.velocity( { opacity: 0}, {duration: options.out_duration, queue: false, ease: "easeOutQuart"});
 
 
       // Define Bottom Sheet animation
-      if ($modal.hasClass('bottom-sheet')) {
+      if ($modal.hasClass('pmab-bottom-sheet')) {
         $modal.velocity({bottom: "-100%", opacity: 0}, {
           duration: options.out_duration,
           queue: false,
@@ -856,18 +855,18 @@ if ($) {
 
     return this.each(function() {
 
-      if ($(this).hasClass('initialized')) {
+      if ($(this).hasClass('pmab-initialized')) {
         return;
       }
 
-      $(this).addClass('initialized');
+      $(this).addClass('pmab-initialized');
 
       var overlayActive = false;
       var doneAnimating = true;
       var inDuration = 275;
       var outDuration = 200;
       var origin = $(this);
-      var placeholder = $('<div></div>').addClass('material-placeholder');
+      var placeholder = $('<div></div>').addClass('pmab-material-placeholder');
       var originalWidth = 0;
       var originalHeight = 0;
       var ancestorsChanged;
@@ -876,7 +875,7 @@ if ($) {
 
 
       origin.on('click', function(){
-        var placeholder = origin.parent('.material-placeholder');
+        var placeholder = origin.parent('.pmab-material-placeholder');
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
         var originalWidth = origin.width();
@@ -896,7 +895,7 @@ if ($) {
 
         // Set states
         doneAnimating = false;
-        origin.addClass('active');
+        origin.addClass('pmab-active');
         overlayActive = true;
 
         // Set positioning for placeholder
@@ -948,7 +947,7 @@ if ($) {
 
         // Add and animate caption if it exists
         if (origin.data('caption') !== "") {
-          var $photo_caption = $('<div class="materialbox-caption"></div>');
+          var $photo_caption = $('<div class="pmab-materialbox-caption"></div>');
           $photo_caption.text(origin.data('caption'));
           $('body').append($photo_caption);
           $photo_caption.css({ "display": "inline" });
@@ -976,7 +975,7 @@ if ($) {
         }
 
         // Animate image + set z-index
-        if(origin.hasClass('responsive-img')) {
+        if(origin.hasClass('pmab-responsive-img')) {
           origin.velocity({'max-width': newWidth, 'width': originalWidth}, {duration: 0, queue: false,
             complete: function(){
               origin.css({left: 0, top: 0})
@@ -984,8 +983,8 @@ if ($) {
                 {
                   height: newHeight,
                   width: newWidth,
-                  left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.material-placeholder').offset().left - newWidth/2,
-                  top: $(document).scrollTop() + windowHeight/2 - origin.parent('.material-placeholder').offset().top - newHeight/ 2
+                  left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.pmab-material-placeholder').offset().left - newWidth/2,
+                  top: $(document).scrollTop() + windowHeight/2 - origin.parent('.pmab-material-placeholder').offset().top - newHeight/ 2
                 },
                 {
                   duration: inDuration,
@@ -1004,8 +1003,8 @@ if ($) {
             {
               height: newHeight,
               width: newWidth,
-              left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.material-placeholder').offset().left - newWidth/2,
-              top: $(document).scrollTop() + windowHeight/2 - origin.parent('.material-placeholder').offset().top - newHeight/ 2
+              left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.pmab-material-placeholder').offset().left - newWidth/2,
+              top: $(document).scrollTop() + windowHeight/2 - origin.parent('.pmab-material-placeholder').offset().top - newHeight/ 2
             },
             {
               duration: inDuration,
@@ -1042,7 +1041,7 @@ if ($) {
 
           doneAnimating = false;
 
-          var placeholder = origin.parent('.material-placeholder');
+          var placeholder = origin.parent('.pmab-material-placeholder');
           var windowWidth = window.innerWidth;
           var windowHeight = window.innerHeight;
           var originalWidth = origin.data('width');
@@ -1050,7 +1049,7 @@ if ($) {
 
           origin.velocity("stop", true);
           $('#materialbox-overlay').velocity("stop", true);
-          $('.materialbox-caption').velocity("stop", true);
+          $('.pmab-materialbox-caption').velocity("stop", true);
 
 
           $('#materialbox-overlay').velocity({opacity: 0}, {
@@ -1078,7 +1077,7 @@ if ($) {
           );
 
           // Remove Caption + reset css settings on image
-          $('.materialbox-caption').velocity({opacity: 0}, {
+          $('.pmab-materialbox-caption').velocity({opacity: 0}, {
             duration: outDuration, // Delay prevents animation overlapping
             queue: false, easing: 'easeOutQuad',
             complete: function(){
@@ -1101,7 +1100,7 @@ if ($) {
               });
 
               // Remove class
-              origin.removeClass('active');
+              origin.removeClass('pmab-active');
               doneAnimating = true;
               $(this).remove();
 
@@ -1115,7 +1114,7 @@ if ($) {
 };
 
 $(document).ready(function(){
-  $('.mdp .materialboxed').materialbox();
+  $('.mdp .pmab-materialboxed').materialbox();
 });
 
 }( jQuery ));
@@ -1126,7 +1125,7 @@ $(document).ready(function(){
       // Parallax Scripts
       return this.each(function(i) {
         var $this = $(this);
-        $this.addClass('parallax');
+        $this.addClass('pmab-parallax');
 
         function updateParallax(initial) {
           var container_height;
@@ -1188,7 +1187,7 @@ $(document).ready(function(){
           window_width = $(window).width();
 
       $this.width('100%');
-      var $active, $content, $links = $this.find('li.tab a'),
+      var $active, $content, $links = $this.find('li.pmab-tab a'),
           $tabs_width = $this.width(),
           $tab_width = $this.find('li').first().outerWidth(),
           $index = 0;
@@ -1198,13 +1197,13 @@ $(document).ready(function(){
 
       // If no match is found, use the first link or any with class 'active' as the initial active tab.
       if ($active.length === 0) {
-          $active = $(this).find('li.tab a.active').first();
+          $active = $(this).find('li.pmba-tab a.pmab-active').first();
       }
       if ($active.length === 0) {
-        $active = $(this).find('li.tab a').first();
+        $active = $(this).find('li.pmab-tab a').first();
       }
 
-      $active.addClass('active');
+      $active.addClass('pmab-active');
       $index = $links.index($active);
       if ($index < 0) {
         $index = 0;
@@ -1213,8 +1212,8 @@ $(document).ready(function(){
       $content = $($active[0].hash);
 
       // append indicator then set indicator width to tab width
-      $this.append('<div class="indicator"></div>');
-      var $indicator = $this.find('.indicator');
+      $this.append('<div class="pmab-indicator"></div>');
+      var $indicator = $this.find('.pmab-indicator');
       if ($this.is(":visible")) {
         $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
         $indicator.css({"left": $index * $tab_width});
@@ -1239,7 +1238,7 @@ $(document).ready(function(){
 
       // Bind the click event handler
       $this.on('click', 'a', function(e) {
-        if ($(this).parent().hasClass('disabled')) {
+        if ($(this).parent().hasClass('pmab-disabled')) {
           e.preventDefault();
           return;
         }
@@ -1248,16 +1247,16 @@ $(document).ready(function(){
         $tab_width = $this.find('li').first().outerWidth();
 
         // Make the old tab inactive.
-        $active.removeClass('active');
+        $active.removeClass('pmab-active');
         $content.hide();
 
         // Update the variables with the new link and content
         $active = $(this);
         $content = $(this.hash);
-        $links = $this.find('li.tab a');
+        $links = $this.find('li.pmab-tab a');
 
         // Make the tab active.
-        $active.addClass('active');
+        $active.addClass('pmab-active');
         var $prev_index = $index;
         $index = $links.index($(this));
         if ($index < 0) {
@@ -1302,7 +1301,7 @@ $(document).ready(function(){
   };
 
   $(document).ready(function(){
-    $('.mdp ul.tabs').tabs();
+    $('.mdp ul.pmab-tabs').tabs();
   });
 }( jQuery ));
 ;(function ($) {
@@ -1337,11 +1336,11 @@ $(document).ready(function(){
 
         // Create tooltip
         var newTooltip = $('<div></div>');
-        newTooltip.addClass('material-tooltip').append(tooltip_text)
+        newTooltip.addClass('pmab-material-tooltip').append(tooltip_text)
           .appendTo($('.mdp:first'))
           .attr('id', tooltipId);
 
-        var backdrop = $('<div></div>').addClass('backdrop');
+        var backdrop = $('<div></div>').addClass('pmab-backdrop');
         backdrop.appendTo(newTooltip);
         backdrop.css({ top: 0, left:0 });
 
@@ -1505,7 +1504,7 @@ $(document).ready(function(){
   };
 
   $(document).ready(function(){
-     $('.mdp .tooltipped').tooltip();
+     $('.mdp .pmab-tooltipped').tooltip();
    });
 }( jQuery ));
 ;/*!
@@ -1577,7 +1576,7 @@ $(document).ready(function(){
 
             // Create ripple
             var ripple = document.createElement('div');
-            ripple.className = 'waves-ripple';
+            ripple.className = 'pmab-waves-ripple';
             el.appendChild(ripple);
 
             // Get click coordinate and element witdh
@@ -1604,9 +1603,9 @@ $(document).ready(function(){
                 'left': relativeX+'px'
             };
 
-            ripple.className = ripple.className + ' waves-notransition';
+            ripple.className = ripple.className + ' pmab-waves-notransition';
             ripple.setAttribute('style', convertStyle(rippleStyle));
-            ripple.className = ripple.className.replace('waves-notransition', '');
+            ripple.className = ripple.className.replace('pmab-waves-notransition', '');
 
             // Scale the ripple
             rippleStyle['-webkit-transform'] = scale;
@@ -1637,7 +1636,7 @@ $(document).ready(function(){
 
             // Get first ripple
             var ripple = null;
-            var ripples = el.getElementsByClassName('waves-ripple');
+            var ripples = el.getElementsByClassName('pmab-waves-ripple');
             if (ripples.length > 0) {
                 ripple = ripples[ripples.length - 1];
             } else {
@@ -1696,13 +1695,13 @@ $(document).ready(function(){
                     var parent = el.parentNode;
 
                     // If input already have parent just pass through
-                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1) {
+                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('pmab-waves-effect') !== -1) {
                         continue;
                     }
 
                     // Put element class and style to the specified parent
                     var wrapper = document.createElement('i');
-                    wrapper.className = el.className + ' waves-input-wrapper';
+                    wrapper.className = el.className + ' pmab-waves-input-wrapper';
 
                     var elementStyle = el.getAttribute('style');
 
@@ -1712,7 +1711,7 @@ $(document).ready(function(){
 
                     wrapper.setAttribute('style', elementStyle);
 
-                    el.className = 'waves-button-input';
+                    el.className = 'pmab-waves-button-input';
                     el.removeAttribute('style');
 
                     // Put element as child
@@ -1769,10 +1768,10 @@ $(document).ready(function(){
         var target = e.target || e.srcElement;
 
         while (target.parentElement !== null) {
-            if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1) {
+            if (!(target instanceof SVGElement) && target.className.indexOf('pmab-waves-effect') !== -1) {
                 element = target;
                 break;
-            } else if (target.classList.contains('waves-effect')) {
+            } else if (target.classList.contains('pmab-waves-effect')) {
                 element = target;
                 break;
             }
@@ -1809,7 +1808,7 @@ $(document).ready(function(){
         }
 
         //Wrap input inside <i> tag
-        Effect.wrapInput($$('.mdp .waves-effect'));
+        Effect.wrapInput($$('.mdp .pmab-waves-effect'));
 
         if ('ontouchstart' in window) {
             document.body.addEventListener('touchstart', showEffect, false);
@@ -1916,7 +1915,7 @@ $(document).ready(function(){
 
         // Create toast
         var toast = document.createElement('div');
-        toast.classList.add('toast');
+        toast.classList.add('pmab-toast');
         if (className) {
             var classes = className.split(' ');
 
@@ -1944,8 +1943,8 @@ $(document).ready(function(){
           var activationDistance = 80;
 
           // Change toast state
-          if (!toast.classList.contains('panning')){
-            toast.classList.add('panning');
+          if (!toast.classList.contains('pmab-panning')){
+            toast.classList.add('pmab-panning');
           }
 
           var opacityPercent = 1-Math.abs(deltaX / activationDistance);
@@ -1974,7 +1973,7 @@ $(document).ready(function(){
             });
 
           } else {
-            toast.classList.remove('panning');
+            toast.classList.remove('pmab-panning');
             // Put toast back into original position
             Vel(toast, { left: 0, opacity: 1 }, { duration: 300,
               easing: 'easeOutExpo',
@@ -2008,7 +2007,7 @@ $(document).ready(function(){
         }
 
         // Add Touch Area
-        var dragTarget = $('<div class="drag-target"></div>');
+        var dragTarget = $('<div class="pmab-drag-target"></div>');
         $('body').append(dragTarget);
 
         if (options.edge == 'left') {
@@ -2016,21 +2015,21 @@ $(document).ready(function(){
           dragTarget.css({'left': 0}); // Add Touch Area
         }
         else {
-          menu_id.addClass('right-aligned') // Change text-alignment to right
+          menu_id.addClass('pmab-right-aligned') // Change text-alignment to right
             .css('right', -1 * (options.menuWidth + 10))
             .css('left', '');
           dragTarget.css({'right': 0}); // Add Touch Area
         }
 
         // If fixed sidenav, bring menu out
-        if (menu_id.hasClass('fixed')) {
+        if (menu_id.hasClass('pmab-fixed')) {
             if (window.innerWidth > 992) {
               menu_id.css('left', 0);
             }
           }
 
         // Window resize to reset on large screens fixed
-        if (menu_id.hasClass('fixed')) {
+        if (menu_id.hasClass('pmab-fixed')) {
           $(window).resize( function() {
             if (window.innerWidth > 992) {
               // Close menu if window is resized bigger than 992 and user has fixed sidenav
@@ -2054,7 +2053,7 @@ $(document).ready(function(){
 
         // if closeOnClick, then add close event for all a tags in side sideNav
         if (options.closeOnClick === true) {
-          menu_id.on("click.itemclick", "a:not(.collapsible-header)", function(){
+          menu_id.on("click.itemclick", "a:not(.pmab-collapsible-header)", function(){
             removeMenu();
           });
         }
@@ -2133,7 +2132,7 @@ $(document).ready(function(){
 
             // If overlay does not exist, create one and if it is clicked, close menu
             if ($('#sidenav-overlay').length === 0) {
-              var overlay = $('<div id="sidenav-overlay"></div>');
+              var overlay = $('<div id="pmab-sidenav-overlay"></div>');
               overlay.css('opacity', 0).click( function(){
                 removeMenu();
               });
@@ -2255,7 +2254,7 @@ $(document).ready(function(){
                 menu_id.css('left','');
               }
 
-              var overlay = $('<div id="sidenav-overlay"></div>');
+              var overlay = $('<div id="pmab-sidenav-overlay"></div>');
               overlay.css('opacity', 0)
               .click(function(){
                 menuOut = false;
@@ -2535,7 +2534,7 @@ $(document).ready(function(){
 			}
 
 
-			$('a[href=#' + visible[0].attr('id') + ']').addClass('active');
+			$('a[href=#' + visible[0].attr('id') + ']').addClass('pmab-active');
 		});
 		selector.on('scrollSpy:exit', function() {
 			visible = $.grep(visible, function(value) {
@@ -2543,13 +2542,13 @@ $(document).ready(function(){
 	    });
 
 			if (visible[0]) {
-				$('a[href=#' + visible[0].attr('id') + ']').removeClass('active');
+				$('a[href=#' + visible[0].attr('id') + ']').removeClass('pmab-active');
 				var $this = $(this);
 				visible = $.grep(visible, function(value) {
 	        return value.attr('id') != $this.attr('id');
 	      });
 	      if (visible[0]) { // Check if empty
-					$('a[href=#' + visible[0].attr('id') + ']').addClass('active');
+					$('a[href=#' + visible[0].attr('id') + ']').addClass('pmab-active');
 	      }
 			}
 		});
@@ -2593,10 +2592,10 @@ $(document).ready(function(){
       var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], textarea';
       $(input_selector).each(function(index, element) {
         if ($(element).val().length > 0 || $(this).attr('placeholder') !== undefined || $(element)[0].validity.badInput === true) {
-          $(this).siblings('label').addClass('active');
+          $(this).siblings('label').addClass('pmab-active');
         }
         else {
-          $(this).siblings('label, i').removeClass('active');
+          $(this).siblings('label, i').removeClass('pmab-active');
         }
       });
     };
@@ -2605,12 +2604,12 @@ $(document).ready(function(){
     var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], textarea';
 
     // Handle HTML5 autofocus
-    $('input[autofocus]').siblings('label, i').addClass('active');
+    $('input[autofocus]').siblings('label, i').addClass('pmab-active');
 
     // Add active if form auto complete
     $(document).on('change', input_selector, function () {
       if($(this).val().length !== 0 || $(this).attr('placeholder') !== undefined) {
-        $(this).siblings('label').addClass('active');
+        $(this).siblings('label').addClass('pmab-active');
       }
       validate_field($(this));
     });
@@ -2624,34 +2623,34 @@ $(document).ready(function(){
     $(document).on('reset', function(e) {
       var formReset = $(e.target);
       if (formReset.is('form')) {
-        formReset.find(input_selector).removeClass('valid').removeClass('invalid');
+        formReset.find(input_selector).removeClass('pmab-valid').removeClass('pmab-invalid');
         formReset.find(input_selector).each(function () {
           if ($(this).attr('value') === '') {
-            $(this).siblings('label, i').removeClass('active');
+            $(this).siblings('label, i').removeClass('pmab-active');
           }
         });
 
         // Reset select
-        formReset.find('select.initialized').each(function () {
+        formReset.find('select.pmab-initialized').each(function () {
           var reset_text = formReset.find('option[selected]').text();
-          formReset.siblings('input.select-dropdown').val(reset_text);
+          formReset.siblings('input.pmab-select-dropdown').val(reset_text);
         });
       }
     });
 
     // Add active when element has focus
     $(document).on('focus', input_selector, function () {
-      $(this).siblings('label, i').addClass('active');
+      $(this).siblings('label, i').addClass('pmab-active');
     });
 
     $(document).on('blur', input_selector, function () {
       var $inputElement = $(this);
       if ($inputElement.val().length === 0 && $inputElement[0].validity.badInput !== true && $inputElement.attr('placeholder') === undefined) {
-        $inputElement.siblings('label, i').removeClass('active');
+        $inputElement.siblings('label, i').removeClass('pmab-active');
       }
 
       if ($inputElement.val().length === 0 && $inputElement[0].validity.badInput !== true && $inputElement.attr('placeholder') !== undefined) {
-        $inputElement.siblings('i').removeClass('active');
+        $inputElement.siblings('i').removeClass('pmab-active');
       }
       validate_field($inputElement);
     });
@@ -2662,21 +2661,21 @@ $(document).ready(function(){
       var len = object.val().length;
 
       if (object.val().length === 0 && object[0].validity.badInput === false) {
-        if (object.hasClass('validate')) {
-          object.removeClass('valid');
-          object.removeClass('invalid');
+        if (object.hasClass('pmab-validate')) {
+          object.removeClass('pmab-valid');
+          object.removeClass('pmab-invalid');
         }
       }
       else {
-        if (object.hasClass('validate')) {
+        if (object.hasClass('pmab-validate')) {
           // Check for character counter attributes
           if ((object.is(':valid') && hasLength && (len <= lenAttr)) || (object.is(':valid') && !hasLength)) {
-            object.removeClass('invalid');
-            object.addClass('valid');
+            object.removeClass('pmab-invalid');
+            object.addClass('pmab-valid');
           }
           else {
-            object.removeClass('valid');
-            object.addClass('invalid');
+            object.removeClass('pmab-valid');
+            object.addClass('pmab-invalid');
           }
         }
       }
@@ -2684,12 +2683,12 @@ $(document).ready(function(){
 
 
     // Textarea Auto Resize
-    var hiddenDiv = $('.hiddendiv').first();
+    var hiddenDiv = $('.pmab-hiddendiv').first();
     if (!hiddenDiv.length) {
-      hiddenDiv = $('<div class="hiddendiv common"></div>');
+      hiddenDiv = $('<div class="pmab-hiddendiv common"></div>');
       $('body').append(hiddenDiv);
     }
-    var text_area_selector = '.materialize-textarea';
+    var text_area_selector = '.pmab-materialize-textarea';
 
     function textareaAutoResize($textarea) {
       // Set font properties of hiddenDiv
@@ -2735,9 +2734,9 @@ $(document).ready(function(){
     });
 
     // File Input Path
-    $(document).on('change', '.file-field input[type="file"]', function () {
-      var file_field = $(this).closest('.file-field');
-      var path_input = file_field.find('input.file-path');
+    $(document).on('change', '.pmab-file-field input[type="file"]', function () {
+      var file_field = $(this).closest('.pmab-file-field');
+      var path_input = file_field.find('input.pmab-file-path');
       var files      = $(this)[0].files;
       var file_names = [];
       for (var i = 0; i < files.length; i++) {
@@ -2756,33 +2755,33 @@ $(document).ready(function(){
     var left;
 
     $(range_type).each(function () {
-      var thumb = $('<span class="thumb"><span class="value"></span></span>');
+      var thumb = $('<span class="pmab-thumb"><span class="pmab-value"></span></span>');
       $(this).after(thumb);
     });
 
-    var range_wrapper = '.range-field';
+    var range_wrapper = '.pmab-range-field';
     $(document).on('change', range_type, function(e) {
-      var thumb = $(this).siblings('.thumb');
-      thumb.find('.value').html($(this).val());
+      var thumb = $(this).siblings('.pmab-thumb');
+      thumb.find('.pmab-value').html($(this).val());
     });
 
     $(document).on('input mousedown touchstart', range_type, function(e) {
-      var thumb = $(this).siblings('.thumb');
+      var thumb = $(this).siblings('.pmab-thumb');
       var width = $(this).outerWidth();
 
       // If thumb indicator does not exist yet, create it
       if (thumb.length <= 0) {
-        thumb = $('<span class="thumb"><span class="value"></span></span>');
+        thumb = $('<span class="pmab-thumb"><span class="pmab-value"></span></span>');
         $(this).after(thumb);
       }
 
       // Set indicator value
-      thumb.find('.value').html($(this).val());
+      thumb.find('.pmab-value').html($(this).val());
 
       range_mousedown = true;
-      $(this).addClass('active');
+      $(this).addClass('pmab-active');
 
-      if (!thumb.hasClass('active')) {
+      if (!thumb.hasClass('pmab-active')) {
         thumb.velocity({ height: "30px", width: "30px", top: "-20px", marginLeft: "-15px"}, { duration: 300, easing: 'easeOutExpo' });
       }
 
@@ -2799,22 +2798,22 @@ $(document).ready(function(){
         else if (left > width) {
           left = width;
         }
-        thumb.addClass('active').css('left', left);
+        thumb.addClass('pmab-active').css('left', left);
       }
 
-      thumb.find('.value').html($(this).val());
+      thumb.find('.pmab-value').html($(this).val());
     });
 
     $(document).on('mouseup touchend', range_wrapper, function() {
       range_mousedown = false;
-      $(this).removeClass('active');
+      $(this).removeClass('pmab-active');
     });
 
     $(document).on('mousemove touchmove', range_wrapper, function(e) {
-      var thumb = $(this).children('.thumb');
+      var thumb = $(this).children('.pmab-thumb');
       var left;
       if (range_mousedown) {
-        if (!thumb.hasClass('active')) {
+        if (!thumb.hasClass('pmab-active')) {
           thumb.velocity({ height: '30px', width: '30px', top: '-20px', marginLeft: '-15px'}, { duration: 300, easing: 'easeOutExpo' });
         }
         if (e.pageX === undefined || e.pageX === null) { //mobile
@@ -2831,20 +2830,20 @@ $(document).ready(function(){
         else if (left > width) {
           left = width;
         }
-        thumb.addClass('active').css('left', left);
-        thumb.find('.value').html(thumb.siblings(range_type).val());
+        thumb.addClass('pmab-active').css('left', left);
+        thumb.find('.pmab-value').html(thumb.siblings(range_type).val());
       }
     });
 
     $(document).on('mouseout touchleave', range_wrapper, function() {
       if (!range_mousedown) {
 
-        var thumb = $(this).children('.thumb');
+        var thumb = $(this).children('.pmab-thumb');
 
-        if (thumb.hasClass('active')) {
+        if (thumb.hasClass('pmab-active')) {
           thumb.velocity({ height: '0', width: '0', top: '10px', marginLeft: '-6px'}, { duration: 100 });
         }
-        thumb.removeClass('active');
+        thumb.removeClass('pmab-active');
       }
     });
   }); // End of $(document).ready
@@ -2856,7 +2855,7 @@ $(document).ready(function(){
     $(this).each(function(){
       var $select = $(this);
 
-      if ($select.hasClass('browser-default')) {
+      if ($select.hasClass('pmab-browser-default')) {
         return; // Continue to next (return false breaks out of entire loop)
       }
 
@@ -2864,7 +2863,7 @@ $(document).ready(function(){
           lastID = $select.data('select-id'); // Tear down structure if Select needs to be rebuilt
 
       if (lastID) {
-        $select.parent().find('span.caret').remove();
+        $select.parent().find('span.pmab-caret').remove();
         $select.parent().find('input').remove();
 
         $select.unwrap();
@@ -2873,15 +2872,15 @@ $(document).ready(function(){
 
       // If destroying the select, remove the selelct-id and reset it to it's uninitialized state.
       if(callback === 'destroy') {
-        $select.data('select-id', null).removeClass('initialized');
+        $select.data('select-id', null).removeClass('pmab-initialized');
         return;
       }
 
       var uniqueID = Materialize.guid();
       $select.data('select-id', uniqueID);
-      var wrapper = $('<div class="select-wrapper"></div>');
+      var wrapper = $('<div class="pmab-select-wrapper"></div>');
       wrapper.addClass($select.attr('class'));
-      var options = $('<ul id="select-options-' + uniqueID +'" class="dropdown-content select-dropdown ' + (multiple ? 'multiple-select-dropdown' : '') + '"></ul>'),
+      var options = $('<ul id="select-options-' + uniqueID +'" class="pmab-dropdown-content pmab-select-dropdown ' + (multiple ? 'pmab-multiple-select-dropdown' : '') + '"></ul>'),
           selectOptions = $select.children('option'),
           selectOptGroups = $select.children('optgroup'),
           valuesSelected = [],
@@ -2928,7 +2927,7 @@ $(document).ready(function(){
         // Check for optgroup
         selectOptGroups.each(function() {
           selectOptions = $(this).children('option');
-          options.append($('<li class="optgroup"><span>' + $(this).attr('label') + '</span></li>'));
+          options.append($('<li class="pmab-optgroup"><span>' + $(this).attr('label') + '</span></li>'));
 
           selectOptions.each(function() {
             appendOptionWithIcon($select, $(this));
@@ -2945,10 +2944,10 @@ $(document).ready(function(){
         });
       }
 
-      options.find('li:not(.optgroup)').each(function (i) {
+      options.find('li:not(.pmab-optgroup)').each(function (i) {
         $(this).click(function (e) {
           // Check if option element is disabled
-          if (!$(this).hasClass('disabled') && !$(this).hasClass('optgroup')) {
+          if (!$(this).hasClass('disabled') && !$(this).hasClass('pmab-optgroup')) {
             var selected = true;
 
             if (multiple) {
@@ -2956,8 +2955,8 @@ $(document).ready(function(){
               selected = toggleEntryFromArray(valuesSelected, $(this).index(), $select);
               $newSelect.trigger('focus');
             } else {
-              options.find('li').removeClass('active');
-              $(this).toggleClass('active');
+              options.find('li').removeClass('pmab-active');
+              $(this).toggleClass('pmab-active');
               $newSelect.val($(this).text());
             }
 
@@ -2975,14 +2974,14 @@ $(document).ready(function(){
       // Wrap Elements
       $select.wrap(wrapper);
       // Add Select Display Element
-      var dropdownIcon = $('<span class="caret">&#9660;</span>');
+      var dropdownIcon = $('<span class="pmab-caret">&#9660;</span>');
       if ($select.is(':disabled'))
         dropdownIcon.addClass('disabled');
 
       // escape double quotes
       var sanitizedLabelHtml = label.html() && label.html().replace(/"/g, '&quot;');
 
-      var $newSelect = $('<input type="text" class="select-dropdown" readonly="true" ' + (($select.is(':disabled')) ? 'disabled' : '') + ' data-activates="select-options-' + uniqueID +'" value="'+ sanitizedLabelHtml +'"/>');
+      var $newSelect = $('<input type="text" class="pmab-select-dropdown" readonly="true" ' + (($select.is(':disabled')) ? 'disabled' : '') + ' data-activates="select-options-' + uniqueID +'" value="'+ sanitizedLabelHtml +'"/>');
       $select.before($newSelect);
       $newSelect.before(dropdownIcon);
 
@@ -2997,12 +2996,12 @@ $(document).ready(function(){
         $($newSelect[0]).attr('tabindex', $select.attr('tabindex'));
       }
 
-      $select.addClass('initialized');
+      $select.addClass('pmab-initialized');
 
       $newSelect.on({
         'focus': function (){
-          if ($('ul.select-dropdown').not(options[0]).is(':visible')) {
-            $('input.select-dropdown').trigger('close');
+          if ($('ul.pmab-select-dropdown').not(options[0]).is(':visible')) {
+            $('input.pmab-select-dropdown').trigger('close');
           }
           if (!options.is(':visible')) {
             $(this).trigger('open', ['focus']);
@@ -3022,7 +3021,7 @@ $(document).ready(function(){
         if (!multiple) {
           $(this).trigger('close');
         }
-        options.find('li.selected').removeClass('selected');
+        options.find('li.pmab-selected').removeClass('pmab-selected');
       });
 
       options.hover(function() {
@@ -3050,9 +3049,9 @@ $(document).ready(function(){
       // Make option as selected and scroll to selected position
       activateOption = function(collection, newOption) {
         if (newOption) {
-          collection.find('li.selected').removeClass('selected');
+          collection.find('li.pmab-selected').removeClass('pmab-selected');
           var option = $(newOption);
-          option.addClass('selected');
+          option.addClass('pmab-selected');
           options.scrollTo(option);
         }
       };
@@ -3098,7 +3097,7 @@ $(document).ready(function(){
 
             // ENTER - select option and close when select options are opened
             if (e.which == 13) {
-              var activeOption = options.find('li.selected:not(.disabled)')[0];
+              var activeOption = options.find('li.pmab-selected:not(.pmab-disabled)')[0];
               if(activeOption){
                 $(activeOption).trigger('click');
                 if (!multiple) {
@@ -3109,8 +3108,8 @@ $(document).ready(function(){
 
             // ARROW DOWN - move to next not disabled option
             if (e.which == 40) {
-              if (options.find('li.selected').length) {
-                newOption = options.find('li.selected').next('li:not(.disabled)')[0];
+              if (options.find('li.pmab-selected').length) {
+                newOption = options.find('li.pmab-selected').next('li:not(.pmab-disabled)')[0];
               } else {
                 newOption = options.find('li:not(.disabled)')[0];
               }
@@ -3124,7 +3123,7 @@ $(document).ready(function(){
 
             // ARROW UP - move to previous not disabled option
             if (e.which == 38) {
-              newOption = options.find('li.selected').prev('li:not(.disabled)')[0];
+              newOption = options.find('li.pmab-selected').prev('li:not(.pmab-disabled)')[0];
               if(newOption)
                 activateOption(options, newOption);
             }
@@ -3146,7 +3145,7 @@ $(document).ready(function(){
         entriesArray.splice(index, 1);
       }
 
-      select.siblings('ul.dropdown-content').find('li').eq(entryIndex).toggleClass('active');
+      select.siblings('ul.pmab-dropdown-content').find('li').eq(entryIndex).toggleClass('active');
       select.find('option').eq(entryIndex).prop('selected', true);
       setValueToInput(entriesArray, select);
 
@@ -3166,7 +3165,7 @@ $(document).ready(function(){
         value = select.find('option:disabled').eq(0).text();
       }
 
-      select.siblings('input.select-dropdown').val(value);
+      select.siblings('input.pmab-select-dropdown').val(value);
     }
   };
 
@@ -3189,21 +3188,21 @@ $(document).ready(function(){
         // For each slider, we want to keep track of
         // which slide is active and its associated content
         var $this = $(this);
-        var $slider = $this.find('ul.slides').first();
+        var $slider = $this.find('ul.pmab-slides').first();
         var $slides = $slider.find('li');
-        var $active_index = $slider.find('.active').index();
+        var $active_index = $slider.find('.pmab-active').index();
         var $active, $indicators, $interval;
         if ($active_index != -1) { $active = $slides.eq($active_index); }
 
         // Transitions the caption depending on alignment
         function captionTransition(caption, duration) {
-          if (caption.hasClass("center-align")) {
+          if (caption.hasClass("pmab-center-align")) {
             caption.velocity({opacity: 0, translateY: -100}, {duration: duration, queue: false});
           }
-          else if (caption.hasClass("right-align")) {
+          else if (caption.hasClass("pmab-right-align")) {
             caption.velocity({opacity: 0, translateX: 100}, {duration: duration, queue: false});
           }
-          else if (caption.hasClass("left-align")) {
+          else if (caption.hasClass("pmab-left-align")) {
             caption.velocity({opacity: 0, translateX: -100}, {duration: duration, queue: false});
           }
         }
@@ -3214,41 +3213,41 @@ $(document).ready(function(){
           if (index >= $slides.length) index = 0;
           else if (index < 0) index = $slides.length -1;
 
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
 
           // Only do if index changes
           if ($active_index != index) {
             $active = $slides.eq($active_index);
-            $caption = $active.find('.caption');
+            $caption = $active.find('.pmab-caption');
 
-            $active.removeClass('active');
+            $active.removeClass('pmab-active');
             $active.velocity({opacity: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad',
                               complete: function() {
-                                $slides.not('.active').velocity({opacity: 0, translateX: 0, translateY: 0}, {duration: 0, queue: false});
+                                $slides.not('.pmab-active').velocity({opacity: 0, translateX: 0, translateY: 0}, {duration: 0, queue: false});
                               } });
             captionTransition($caption, options.transition);
 
 
             // Update indicators
             if (options.indicators) {
-              $indicators.eq($active_index).removeClass('active');
+              $indicators.eq($active_index).removeClass('pmab-active');
             }
 
             $slides.eq(index).velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
-            $slides.eq(index).find('.caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, delay: options.transition, queue: false, easing: 'easeOutQuad'});
-            $slides.eq(index).addClass('active');
+            $slides.eq(index).find('.pmab-caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, delay: options.transition, queue: false, easing: 'easeOutQuad'});
+            $slides.eq(index).addClass('pmab-active');
 
 
             // Update indicators
             if (options.indicators) {
-              $indicators.eq(index).addClass('active');
+              $indicators.eq(index).addClass('pmab-active');
             }
           }
         }
 
         // Set height of slider
         // If fullscreen, do nothing
-        if (!$this.hasClass('fullscreen')) {
+        if (!$this.hasClass('pmab-fullscreen')) {
           if (options.indicators) {
             // Add height if indicators are present
             $this.height(options.height + 40);
@@ -3261,7 +3260,7 @@ $(document).ready(function(){
 
 
         // Set initial positions of captions
-        $slides.find('.caption').each(function () {
+        $slides.find('.pmab-caption').each(function () {
           captionTransition($(this), 0);
         });
 
@@ -3276,9 +3275,9 @@ $(document).ready(function(){
 
         // dynamically add indicators
         if (options.indicators) {
-          $indicators = $('<ul class="indicators"></ul>');
+          $indicators = $('<ul class="pmab-indicators"></ul>');
           $slides.each(function( index ) {
-            var $indicator = $('<li class="indicator-item"></li>');
+            var $indicator = $('<li class="pmab-indicator-item"></li>');
 
             // Handle clicks on indicators
             $indicator.click(function () {
@@ -3290,7 +3289,7 @@ $(document).ready(function(){
               clearInterval($interval);
               $interval = setInterval(
                 function(){
-                  $active_index = $slider.find('.active').index();
+                  $active_index = $slider.find('.pmab-active').index();
                   if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
                   else $active_index += 1;
 
@@ -3302,33 +3301,33 @@ $(document).ready(function(){
             $indicators.append($indicator);
           });
           $this.append($indicators);
-          $indicators = $this.find('ul.indicators').find('li.indicator-item');
+          $indicators = $this.find('ul.pmab-indicators').find('li.pmab-indicator-item');
         }
 
         if ($active) {
           $active.show();
         }
         else {
-          $slides.first().addClass('active').velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
+          $slides.first().addClass('pmab-active').velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
 
           $active_index = 0;
           $active = $slides.eq($active_index);
 
           // Update indicators
           if (options.indicators) {
-            $indicators.eq($active_index).addClass('active');
+            $indicators.eq($active_index).addClass('pmab-active');
           }
         }
 
         // Adjust height to current slide
         $active.find('img').each(function() {
-          $active.find('.caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
+          $active.find('.pmab-caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
         });
 
         // auto scroll
         $interval = setInterval(
           function(){
-            $active_index = $slider.find('.active').index();
+            $active_index = $slider.find('.pmab-active').index();
             moveToSlide($active_index + 1);
 
           }, options.transition + options.interval
@@ -3422,7 +3421,7 @@ $(document).ready(function(){
             clearInterval($interval);
             $interval = setInterval(
               function(){
-                $active_index = $slider.find('.active').index();
+                $active_index = $slider.find('.pmab-active').index();
                 if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
                 else $active_index += 1;
 
@@ -3441,7 +3440,7 @@ $(document).ready(function(){
           clearInterval($interval);
           $interval = setInterval(
             function(){
-              $active_index = $slider.find('.active').index();
+              $active_index = $slider.find('.pmab-active').index();
               if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
               else $active_index += 1;
 
@@ -3452,12 +3451,12 @@ $(document).ready(function(){
         });
 
         $this.on('sliderNext', function() {
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
           moveToSlide($active_index + 1);
         });
 
         $this.on('sliderPrev', function() {
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
           moveToSlide($active_index - 1);
         });
 
@@ -3494,11 +3493,11 @@ $(document).ready(function(){
 }( jQuery ));;(function ($) {
   $(document).ready(function() {
 
-    $(document).on('click.card', '.card', function (e) {
-      if ($(this).find('> .card-reveal').length) {
+    $(document).on('click.card', '.pmab-card', function (e) {
+      if ($(this).find('> .pmab-card-reveal').length) {
         if ($(e.target).is($('.card-reveal .card-title')) || $(e.target).is($('.card-reveal .card-title i'))) {
           // Make Reveal animate down and display none
-          $(this).find('.card-reveal').velocity(
+          $(this).find('.pmab-card-reveal').velocity(
             {translateY: 0}, {
               duration: 225,
               queue: false,
@@ -3507,14 +3506,14 @@ $(document).ready(function(){
             }
           );
         }
-        else if ($(e.target).is($('.card .activator')) ||
-                 $(e.target).is($('.card .activator i')) ) {
+        else if ($(e.target).is($('.pmab-card .pmab-activator')) ||
+                 $(e.target).is($('.pmab-card .pmab-activator i')) ) {
           $(e.target).closest('.card').css('overflow', 'hidden');
-          $(this).find('.card-reveal').css({ display: 'block'}).velocity("stop", false).velocity({translateY: '-100%'}, {duration: 300, queue: false, easing: 'easeInOutQuad'});
+          $(this).find('.pmab-card-reveal').css({ display: 'block'}).velocity("stop", false).velocity({translateY: '-100%'}, {duration: 300, queue: false, easing: 'easeInOutQuad'});
         }
       }
 
-      $('.card-reveal').closest('.card').css('overflow', 'hidden');
+      $('.pmab-card-reveal').closest('.pmab-card').css('overflow', 'hidden');
 
     });
 
@@ -3522,7 +3521,7 @@ $(document).ready(function(){
 }( jQuery ));;(function ($) {
   $(document).ready(function() {
 
-    $(document).on('click.chip', '.chip .material-icons', function (e) {
+    $(document).on('click.chip', '.pmab-chip .pmab-material-icons', function (e) {
       $(this).parent().remove();
     });
 
@@ -3536,7 +3535,7 @@ $(document).ready(function(){
         top: 0,
         bottom: Infinity,
         offset: 0
-      }
+      };
       options = $.extend(defaults, options);
 
       $index = 0;
@@ -3546,31 +3545,31 @@ $(document).ready(function(){
             $original_offset = $(this).offset().top;
 
         function removePinClasses(object) {
-          object.removeClass('pin-top');
-          object.removeClass('pinned');
-          object.removeClass('pin-bottom');
+          object.removeClass('pmab-pin-top');
+          object.removeClass('pmab-pinned');
+          object.removeClass('pmab-pin-bottom');
         }
 
         function updateElements(objects, scrolled) {
           objects.each(function () {
             // Add position fixed (because its between top and bottom)
-            if (options.top <= scrolled && options.bottom >= scrolled && !$(this).hasClass('pinned')) {
+            if (options.top <= scrolled && options.bottom >= scrolled && !$(this).hasClass('pmab-pinned')) {
               removePinClasses($(this));
               $(this).css('top', options.offset);
-              $(this).addClass('pinned');
+              $(this).addClass('pmab-pinned');
             }
 
             // Add pin-top (when scrolled position is above top)
             if (scrolled < options.top && !$(this).hasClass('pin-top')) {
               removePinClasses($(this));
               $(this).css('top', 0);
-              $(this).addClass('pin-top');
+              $(this).addClass('pmab-pin-top');
             }
 
             // Add pin-bottom (when scrolled position is below bottom)
             if (scrolled > options.bottom && !$(this).hasClass('pin-bottom')) {
               removePinClasses($(this));
-              $(this).addClass('pin-bottom');
+              $(this).addClass('pmab-pin-bottom');
               $(this).css('top', options.bottom - $original_offset);
             }
           });
@@ -3585,8 +3584,6 @@ $(document).ready(function(){
       });
 
     };
-
-
   });
 }( jQuery ));;(function ($) {
   $(document).ready(function() {
@@ -3595,17 +3592,17 @@ $(document).ready(function(){
     $.fn.reverse = [].reverse;
 
     // Hover behaviour: make sure this doesn't work on .click-to-toggle FABs!
-    $(document).on('mouseenter.fixedActionBtn', '.fixed-action-btn:not(.click-to-toggle)', function(e) {
+    $(document).on('mouseenter.fixedActionBtn', '.pmab-fixed-action-btn:not(.pmab-click-to-toggle)', function(e) {
       var $this = $(this);
       openFABMenu($this);
     });
-    $(document).on('mouseleave.fixedActionBtn', '.fixed-action-btn:not(.click-to-toggle)', function(e) {
+    $(document).on('mouseleave.fixedActionBtn', '.pmab-fixed-action-btn:not(.pmab-click-to-toggle)', function(e) {
       var $this = $(this);
       closeFABMenu($this);
     });
 
     // Toggle-on-click behaviour.
-    $(document).on('click.fixedActionBtn', '.fixed-action-btn.click-to-toggle > a', function(e) {
+    $(document).on('click.fixedActionBtn', '.pmab-fixed-action-btn.pmab-click-to-toggle > a', function(e) {
       var $this = $(this);
       var $menu = $this.parent();
       if ($menu.hasClass('active')) {
@@ -3630,10 +3627,10 @@ $(document).ready(function(){
 
   var openFABMenu = function (btn) {
     $this = btn;
-    if ($this.hasClass('active') === false) {
+    if ($this.hasClass('pmab-active') === false) {
 
       // Get direction option
-      var horizontal = $this.hasClass('horizontal');
+      var horizontal = $this.hasClass('pmab-horizontal');
       var offsetY, offsetX;
 
       if (horizontal === true) {
@@ -3642,13 +3639,13 @@ $(document).ready(function(){
         offsetY = 40;
       }
 
-      $this.addClass('active');
-      $this.find('ul .btn-floating').velocity(
+      $this.addClass('pmab-active');
+      $this.find('ul .pmab-btn-floating').velocity(
         { scaleY: ".4", scaleX: ".4", translateY: offsetY + 'px', translateX: offsetX + 'px'},
         { duration: 0 });
 
       var time = 0;
-      $this.find('ul .btn-floating').reverse().each( function () {
+      $this.find('ul .pmab-btn-floating').reverse().each( function () {
         $(this).velocity(
           { opacity: "1", scaleX: "1", scaleY: "1", translateY: "0", translateX: '0'},
           { duration: 80, delay: time });
@@ -3660,7 +3657,7 @@ $(document).ready(function(){
   var closeFABMenu = function (btn) {
     $this = btn;
     // Get direction option
-    var horizontal = $this.hasClass('horizontal');
+    var horizontal = $this.hasClass('pmab-horizontal');
     var offsetY, offsetX;
 
     if (horizontal === true) {
@@ -3669,10 +3666,10 @@ $(document).ready(function(){
       offsetY = 40;
     }
 
-    $this.removeClass('active');
+    $this.removeClass('pmab-active');
     var time = 0;
-    $this.find('ul .btn-floating').velocity("stop", true);
-    $this.find('ul .btn-floating').velocity(
+    $this.find('ul .pmab-btn-floating').velocity("stop", true);
+    $this.find('ul .pmab-btn-floating').velocity(
       { opacity: "0", scaleX: ".4", scaleY: ".4", translateY: offsetY + 'px', translateX: offsetX + 'px'},
       { duration: 80 }
     );
@@ -3750,7 +3747,7 @@ $(document).ready(function(){
 
 
     // Dismissible Collections
-    $('.dismissable').each(function() {
+    $('.pmab-dismissable').each(function() {
       $(this).hammer({
         prevent_default: false
       }).bind('pan', function(e) {
@@ -6453,7 +6450,7 @@ Picker.extend( 'pickadate', DatePicker )
     actualLength      = +$(this).val().length,
     isValidLength     = actualLength <= maxLength;
 
-    $(this).parent().find('span[class="character-counter"]')
+    $(this).parent().find('span[class="pmab-character-counter"]')
                     .html( actualLength + '/' + maxLength);
 
     addInputStyle(isValidLength, $(this));
@@ -6461,7 +6458,7 @@ Picker.extend( 'pickadate', DatePicker )
 
   function addCounterElement($input){
     var $counterElement = $('<span/>')
-                        .addClass('character-counter')
+                        .addClass('pmab-character-counter')
                         .css('float','right')
                         .css('font-size','12px')
                         .css('height', 1);
@@ -6470,17 +6467,17 @@ Picker.extend( 'pickadate', DatePicker )
   }
 
   function removeCounterElement(){
-    $(this).parent().find('span[class="character-counter"]').html('');
+    $(this).parent().find('span[class="pmab-character-counter"]').html('');
   }
 
   function addInputStyle(isValidLength, $input){
-    var inputHasInvalidClass = $input.hasClass('invalid');
+    var inputHasInvalidClass = $input.hasClass('pmab-invalid');
     if (isValidLength && inputHasInvalidClass) {
-      $input.removeClass('invalid');
+      $input.removeClass('pmab-invalid');
     }
     else if(!isValidLength && !inputHasInvalidClass){
-      $input.removeClass('valid');
-      $input.addClass('invalid');
+      $input.removeClass('pmab-valid');
+      $input.addClass('pmab-invalid');
     }
   }
 
@@ -6512,26 +6509,26 @@ Picker.extend( 'pickadate', DatePicker )
         // Initialize
         var view = $(this);
         // Don't double initialize.
-        if (view.hasClass('initialized')) {
+        if (view.hasClass('pmab-initialized')) {
           return true;
         }
 
         // Options
         if (options.full_width) {
           options.dist = 0;
-          imageHeight = view.find('.carousel-item img').first().load(function(){
+          imageHeight = view.find('.pmab-carousel-item img').first().load(function(){
             view.css('height', $(this).height());
           });
         }
 
-        view.addClass('initialized');
+        view.addClass('pmab-initialized');
         pressed = false;
         offset = target = 0;
         images = [];
-        item_width = view.find('.carousel-item').first().innerWidth();
+        item_width = view.find('.pmab-carousel-item').first().innerWidth();
         dim = item_width * 2 + options.padding;
 
-        view.find('.carousel-item').each(function () {
+        view.find('.pmab-carousel-item').each(function () {
           images.push($(this)[0]);
         });
 
@@ -6683,7 +6680,7 @@ Picker.extend( 'pickadate', DatePicker )
             return false;
 
           } else if (!options.full_width) {
-            var clickedIndex = $(e.target).closest('.carousel-item').index();
+            var clickedIndex = $(e.target).closest('.pmab-carousel-item').index();
             var diff = (center % count) - clickedIndex;
 
             // Account for wraparound.

@@ -21,7 +21,7 @@
     actualLength      = +$(this).val().length,
     isValidLength     = actualLength <= maxLength;
 
-    $(this).parent().find('span[class="character-counter"]')
+    $(this).parent().find('span[class="pmab-character-counter"]')
                     .html( actualLength + '/' + maxLength);
 
     addInputStyle(isValidLength, $(this));
@@ -29,7 +29,7 @@
 
   function addCounterElement($input){
     var $counterElement = $('<span/>')
-                        .addClass('character-counter')
+                        .addClass('pmab-character-counter')
                         .css('float','right')
                         .css('font-size','12px')
                         .css('height', 1);
@@ -38,17 +38,17 @@
   }
 
   function removeCounterElement(){
-    $(this).parent().find('span[class="character-counter"]').html('');
+    $(this).parent().find('span[class="pmab-character-counter"]').html('');
   }
 
   function addInputStyle(isValidLength, $input){
-    var inputHasInvalidClass = $input.hasClass('invalid');
+    var inputHasInvalidClass = $input.hasClass('pmab-invalid');
     if (isValidLength && inputHasInvalidClass) {
-      $input.removeClass('invalid');
+      $input.removeClass('pmab-invalid');
     }
     else if(!isValidLength && !inputHasInvalidClass){
-      $input.removeClass('valid');
-      $input.addClass('invalid');
+      $input.removeClass('pmab-valid');
+      $input.addClass('pmab-invalid');
     }
   }
 

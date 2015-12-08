@@ -51,8 +51,6 @@
             // Attach dropdown to its activator
             if (options.attachToActivator) {
                 origin.after(activates);
-            } if(!options.attachToActivator) {
-                activates.css('min-width', origin.width());
             }
 
             /*
@@ -69,8 +67,8 @@
                 updateOptions();
 
                 // Set Dropdown state
-                activates.addClass('active');
-                origin.addClass('active');
+                activates.addClass('pmab-active');
+                origin.addClass('pmab-active');
 
                 // Constrain width
                 if (options.constrain_width === true) {
@@ -120,10 +118,10 @@
                 // Handle edge alignment
                 if (currAlignment === 'left') {
                     gutterSpacing = options.gutter;
-                    leftPosition = origin.position().left + gutterSpacing;
+                    leftPosition = origin.offset().left + gutterSpacing;
                 }
                 else if (currAlignment === 'right') {
-                    var offsetRight = origin.position().left + origin.outerWidth() - activates.outerWidth();
+                    var offsetRight = origin.offset().left + origin.outerWidth() - activates.outerWidth();
                     gutterSpacing = -options.gutter;
                     leftPosition = offsetRight + gutterSpacing;
                 }
@@ -132,7 +130,8 @@
                 activates.css({
                     position: 'absolute',
                     top: origin.position().top + verticalOffset,
-                    left: leftPosition
+                    left: leftPosition,
+                    "min-width": origin.width()
                 });
 
 
@@ -153,8 +152,8 @@
                 // Check for simultaneous focus and click events.
                 isFocused = false;
                 activates.fadeOut(options.outDuration);
-                activates.removeClass('active');
-                origin.removeClass('active');
+                activates.removeClass('pmab-active');
+                origin.removeClass('pmab-active');
                 setTimeout(function () {
                     activates.css('max-height', '');
                 }, options.outDuration);
@@ -174,7 +173,7 @@
                 origin.on('mouseleave', function (e) {
                     // If hover on origin then to something other than dropdown content, then close
                     var toEl = e.toElement || e.relatedTarget; // added browser compatibility for target element
-                    if (!$(toEl).closest('.dropdown-content').is(activates)) {
+                    if (!$(toEl).closest('.pmab-dropdown-content').is(activates)) {
                         activates.stop(true, true);
                         hideDropdown();
                         open = false;
@@ -183,7 +182,7 @@
 
                 activates.on('mouseleave', function (e) { // Mouse out
                     var toEl = e.toElement || e.relatedTarget;
-                    if (!$(toEl).closest('.dropdown-button').is(origin)) {
+                    if (!$(toEl).closest('.pmab-dropdown-button').is(origin)) {
                         activates.stop(true, true);
                         hideDropdown();
                         open = false;
@@ -196,18 +195,18 @@
                 origin.unbind('click.' + origin.attr('id'));
                 origin.bind('click.' + origin.attr('id'), function (e) {
                     if (!isFocused) {
-                        if (origin[0] == e.currentTarget && !origin.hasClass('active') &&
+                        if (origin[0] == e.currentTarget && !origin.hasClass('pmab-active') &&
                             ($(e.target).closest('.dropdown-content').length === 0)) {
                             e.preventDefault(); // Prevents button click from moving window
                             placeDropdown('click');
                         }
                         // If origin is clicked and menu is open, close menu
-                        else if (origin.hasClass('active')) {
+                        else if (origin.hasClass('pmab-active')) {
                             hideDropdown();
                             $(document).unbind('click.' + activates.attr('id') + ' touchstart.' + activates.attr('id'));
                         }
                         // If menu open, add click close handler to document
-                        if (activates.hasClass('active')) {
+                        if (activates.hasClass('pmab-active')) {
                             $(document).bind('click.' + activates.attr('id') + ' touchstart.' + activates.attr('id'), function (e) {
                                 if (!activates.is(e.target) && !origin.is(e.target) && (!origin.find(e.target).length)) {
                                     hideDropdown();
@@ -231,6 +230,6 @@
     }; // End dropdown plugin
 
     $(document).ready(function () {
-        $('.mdp .dropdown-button').dropdown();
+        $('.mdp .pmab-dropdown-button').dropdown();
     });
 }(jQuery));

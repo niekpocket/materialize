@@ -68,7 +68,7 @@ Materialize.toast = function (message, displayLength, className, completeCallbac
 
         // Create toast
         var toast = document.createElement('div');
-        toast.classList.add('toast');
+        toast.classList.add('pmab-toast');
         if (className) {
             var classes = className.split(' ');
 
@@ -96,8 +96,8 @@ Materialize.toast = function (message, displayLength, className, completeCallbac
           var activationDistance = 80;
 
           // Change toast state
-          if (!toast.classList.contains('panning')){
-            toast.classList.add('panning');
+          if (!toast.classList.contains('pmab-panning')){
+            toast.classList.add('pmab-panning');
           }
 
           var opacityPercent = 1-Math.abs(deltaX / activationDistance);
@@ -126,7 +126,7 @@ Materialize.toast = function (message, displayLength, className, completeCallbac
             });
 
           } else {
-            toast.classList.remove('panning');
+            toast.classList.remove('pmab-panning');
             // Put toast back into original position
             Vel(toast, { left: 0, opacity: 1 }, { duration: 300,
               easing: 'easeOutExpo',

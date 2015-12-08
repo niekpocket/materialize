@@ -5,7 +5,7 @@
       // Parallax Scripts
       return this.each(function(i) {
         var $this = $(this);
-        $this.addClass('parallax');
+        $this.addClass('pmab-parallax');
 
         function updateParallax(initial) {
           var container_height;

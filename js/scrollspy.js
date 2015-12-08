@@ -231,7 +231,7 @@
 			}
 
 
-			$('a[href=#' + visible[0].attr('id') + ']').addClass('active');
+			$('a[href=#' + visible[0].attr('id') + ']').addClass('pmab-active');
 		});
 		selector.on('scrollSpy:exit', function() {
 			visible = $.grep(visible, function(value) {
@@ -239,13 +239,13 @@
 	    });
 
 			if (visible[0]) {
-				$('a[href=#' + visible[0].attr('id') + ']').removeClass('active');
+				$('a[href=#' + visible[0].attr('id') + ']').removeClass('pmab-active');
 				var $this = $(this);
 				visible = $.grep(visible, function(value) {
 	        return value.attr('id') != $this.attr('id');
 	      });
 	      if (visible[0]) { // Check if empty
-					$('a[href=#' + visible[0].attr('id') + ']').addClass('active');
+					$('a[href=#' + visible[0].attr('id') + ']').addClass('pmab-active');
 	      }
 			}
 		});

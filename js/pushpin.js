@@ -7,7 +7,7 @@
         top: 0,
         bottom: Infinity,
         offset: 0
-      }
+      };
       options = $.extend(defaults, options);
 
       $index = 0;
@@ -17,31 +17,31 @@
             $original_offset = $(this).offset().top;
 
         function removePinClasses(object) {
-          object.removeClass('pin-top');
-          object.removeClass('pinned');
-          object.removeClass('pin-bottom');
+          object.removeClass('pmab-pin-top');
+          object.removeClass('pmab-pinned');
+          object.removeClass('pmab-pin-bottom');
         }
 
         function updateElements(objects, scrolled) {
           objects.each(function () {
             // Add position fixed (because its between top and bottom)
-            if (options.top <= scrolled && options.bottom >= scrolled && !$(this).hasClass('pinned')) {
+            if (options.top <= scrolled && options.bottom >= scrolled && !$(this).hasClass('pmab-pinned')) {
               removePinClasses($(this));
               $(this).css('top', options.offset);
-              $(this).addClass('pinned');
+              $(this).addClass('pmab-pinned');
             }
 
             // Add pin-top (when scrolled position is above top)
             if (scrolled < options.top && !$(this).hasClass('pin-top')) {
               removePinClasses($(this));
               $(this).css('top', 0);
-              $(this).addClass('pin-top');
+              $(this).addClass('pmab-pin-top');
             }
 
             // Add pin-bottom (when scrolled position is below bottom)
             if (scrolled > options.bottom && !$(this).hasClass('pin-bottom')) {
               removePinClasses($(this));
-              $(this).addClass('pin-bottom');
+              $(this).addClass('pmab-pin-bottom');
               $(this).css('top', options.bottom - $original_offset);
             }
           });
@@ -56,7 +56,5 @@
       });
 
     };
-
-
   });
 }( jQuery ));

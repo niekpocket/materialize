@@ -11,12 +11,12 @@
 
       var $this = $(this);
 
-      var $panel_headers = $(this).find('> li > .collapsible-header');
+      var $panel_headers = $(this).find('> li > .pmab-collapsible-header');
 
       var collapsible_type = $this.data("collapsible");
 
       // Turn off any existing event handlers
-       $this.off('click.collapse', '.collapsible-header');
+       $this.off('click.collapse', '.pmab-collapsible-header');
        $panel_headers.off('click.collapse');
 
 
@@ -26,7 +26,7 @@
 
       // Accordion Open
       function accordionOpen(object) {
-        $panel_headers = $this.find('> li > .collapsible-header');
+        $panel_headers = $this.find('> li > .pmab-collapsible-header');
         if (object.hasClass('active')) {
             object.parent().addClass('active');
         }
@@ -34,14 +34,14 @@
             object.parent().removeClass('active');
         }
         if (object.parent().hasClass('active')){
-          object.siblings('.collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
         else{
-          object.siblings('.collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
 
-        $panel_headers.not(object).removeClass('active').parent().removeClass('active');
-        $panel_headers.not(object).parent().children('.collapsible-body').stop(true,false).slideUp(
+        $panel_headers.not(object).removeClass('pmab-active').parent().removeClass('active');
+        $panel_headers.not(object).parent().children('.pmab-collapsible-body').stop(true,false).slideUp(
           {
             duration: 350,
             easing: "easeOutQuart",
@@ -55,17 +55,17 @@
 
       // Expandable Open
       function expandableOpen(object) {
-        if (object.hasClass('active')) {
-            object.parent().addClass('active');
+        if (object.hasClass('pmab-active')) {
+            object.parent().addClass('pmab-active');
         }
         else {
-            object.parent().removeClass('active');
+            object.parent().removeClass('pmab-active');
         }
-        if (object.parent().hasClass('active')){
-          object.siblings('.collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+        if (object.parent().hasClass('pmab-active')){
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
         else{
-          object.siblings('.collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+          object.siblings('.pmab-collapsible-body').stop(true,false).slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
         }
       }
 
@@ -88,7 +88,7 @@
        */
       function getPanelHeader(object) {
 
-        return object.closest('li > .collapsible-header');
+        return object.closest('li > .pmab-collapsible-header');
       }
 
       /*****  End Helper Functions  *****/
@@ -96,7 +96,7 @@
 
 
       // Add click handler to only direct collapsible header children
-      $this.on('click.collapse', '> li > .collapsible-header', function(e) {
+      $this.on('click.collapse', '> li > .pmab-collapsible-header', function(e) {
         var $header = $(this),
             element = $(e.target);
 
@@ -104,26 +104,26 @@
           element = getPanelHeader(element);
         }
 
-        element.toggleClass('active');
+        element.toggleClass('pmab-active');
 
         if (options.accordion || collapsible_type === "accordion" || collapsible_type === undefined) { // Handle Accordion
           accordionOpen(element);
         } else { // Handle Expandables
           expandableOpen(element);
 
-          if ($header.hasClass('active')) {
+          if ($header.hasClass('pmab-active')) {
             expandableOpen($header);
           }
         }
       });
 
       // Open first active
-      var $panel_headers = $this.find('> li > .collapsible-header');
+      var $panel_headers = $this.find('> li > .pmab-collapsible-header');
       if (options.accordion || collapsible_type === "accordion" || collapsible_type === undefined) { // Handle Accordion
-        accordionOpen($panel_headers.filter('.active').first());
+        accordionOpen($panel_headers.filter('.pmab-active').first());
       }
       else { // Handle Expandables
-        $panel_headers.filter('.active').each(function() {
+        $panel_headers.filter('.pmab-active').each(function() {
           expandableOpen($(this));
         });
       }
@@ -132,6 +132,6 @@
   };
 
   $(document).ready(function(){
-    $('.mdp .collapsible').collapsible();
+    $('.mdp .pmab-collapsible').collapsible();
   });
 }( jQuery ));

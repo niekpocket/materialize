@@ -1,11 +1,11 @@
 (function ($) {
   $(document).ready(function() {
 
-    $(document).on('click.card', '.card', function (e) {
-      if ($(this).find('> .card-reveal').length) {
+    $(document).on('click.card', '.pmab-card', function (e) {
+      if ($(this).find('> .pmab-card-reveal').length) {
         if ($(e.target).is($('.card-reveal .card-title')) || $(e.target).is($('.card-reveal .card-title i'))) {
           // Make Reveal animate down and display none
-          $(this).find('.card-reveal').velocity(
+          $(this).find('.pmab-card-reveal').velocity(
             {translateY: 0}, {
               duration: 225,
               queue: false,
@@ -14,14 +14,14 @@
             }
           );
         }
-        else if ($(e.target).is($('.card .activator')) ||
-                 $(e.target).is($('.card .activator i')) ) {
+        else if ($(e.target).is($('.pmab-card .pmab-activator')) ||
+                 $(e.target).is($('.pmab-card .pmab-activator i')) ) {
           $(e.target).closest('.card').css('overflow', 'hidden');
-          $(this).find('.card-reveal').css({ display: 'block'}).velocity("stop", false).velocity({translateY: '-100%'}, {duration: 300, queue: false, easing: 'easeInOutQuad'});
+          $(this).find('.pmab-card-reveal').css({ display: 'block'}).velocity("stop", false).velocity({translateY: '-100%'}, {duration: 300, queue: false, easing: 'easeInOutQuad'});
         }
       }
 
-      $('.card-reveal').closest('.card').css('overflow', 'hidden');
+      $('.pmab-card-reveal').closest('.pmab-card').css('overflow', 'hidden');
 
     });
 

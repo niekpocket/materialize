@@ -4,18 +4,18 @@
 
     return this.each(function() {
 
-      if ($(this).hasClass('initialized')) {
+      if ($(this).hasClass('pmab-initialized')) {
         return;
       }
 
-      $(this).addClass('initialized');
+      $(this).addClass('pmab-initialized');
 
       var overlayActive = false;
       var doneAnimating = true;
       var inDuration = 275;
       var outDuration = 200;
       var origin = $(this);
-      var placeholder = $('<div></div>').addClass('material-placeholder');
+      var placeholder = $('<div></div>').addClass('pmab-material-placeholder');
       var originalWidth = 0;
       var originalHeight = 0;
       var ancestorsChanged;
@@ -24,7 +24,7 @@
 
 
       origin.on('click', function(){
-        var placeholder = origin.parent('.material-placeholder');
+        var placeholder = origin.parent('.pmab-material-placeholder');
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
         var originalWidth = origin.width();
@@ -44,7 +44,7 @@
 
         // Set states
         doneAnimating = false;
-        origin.addClass('active');
+        origin.addClass('pmab-active');
         overlayActive = true;
 
         // Set positioning for placeholder
@@ -96,7 +96,7 @@
 
         // Add and animate caption if it exists
         if (origin.data('caption') !== "") {
-          var $photo_caption = $('<div class="materialbox-caption"></div>');
+          var $photo_caption = $('<div class="pmab-materialbox-caption"></div>');
           $photo_caption.text(origin.data('caption'));
           $('body').append($photo_caption);
           $photo_caption.css({ "display": "inline" });
@@ -124,7 +124,7 @@
         }
 
         // Animate image + set z-index
-        if(origin.hasClass('responsive-img')) {
+        if(origin.hasClass('pmab-responsive-img')) {
           origin.velocity({'max-width': newWidth, 'width': originalWidth}, {duration: 0, queue: false,
             complete: function(){
               origin.css({left: 0, top: 0})
@@ -132,8 +132,8 @@
                 {
                   height: newHeight,
                   width: newWidth,
-                  left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.material-placeholder').offset().left - newWidth/2,
-                  top: $(document).scrollTop() + windowHeight/2 - origin.parent('.material-placeholder').offset().top - newHeight/ 2
+                  left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.pmab-material-placeholder').offset().left - newWidth/2,
+                  top: $(document).scrollTop() + windowHeight/2 - origin.parent('.pmab-material-placeholder').offset().top - newHeight/ 2
                 },
                 {
                   duration: inDuration,
@@ -152,8 +152,8 @@
             {
               height: newHeight,
               width: newWidth,
-              left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.material-placeholder').offset().left - newWidth/2,
-              top: $(document).scrollTop() + windowHeight/2 - origin.parent('.material-placeholder').offset().top - newHeight/ 2
+              left: $(document).scrollLeft() + windowWidth/2 - origin.parent('.pmab-material-placeholder').offset().left - newWidth/2,
+              top: $(document).scrollTop() + windowHeight/2 - origin.parent('.pmab-material-placeholder').offset().top - newHeight/ 2
             },
             {
               duration: inDuration,
@@ -190,7 +190,7 @@
 
           doneAnimating = false;
 
-          var placeholder = origin.parent('.material-placeholder');
+          var placeholder = origin.parent('.pmab-material-placeholder');
           var windowWidth = window.innerWidth;
           var windowHeight = window.innerHeight;
           var originalWidth = origin.data('width');
@@ -198,7 +198,7 @@
 
           origin.velocity("stop", true);
           $('#materialbox-overlay').velocity("stop", true);
-          $('.materialbox-caption').velocity("stop", true);
+          $('.pmab-materialbox-caption').velocity("stop", true);
 
 
           $('#materialbox-overlay').velocity({opacity: 0}, {
@@ -226,7 +226,7 @@
           );
 
           // Remove Caption + reset css settings on image
-          $('.materialbox-caption').velocity({opacity: 0}, {
+          $('.pmab-materialbox-caption').velocity({opacity: 0}, {
             duration: outDuration, // Delay prevents animation overlapping
             queue: false, easing: 'easeOutQuad',
             complete: function(){
@@ -249,7 +249,7 @@
               });
 
               // Remove class
-              origin.removeClass('active');
+              origin.removeClass('pmab-active');
               doneAnimating = true;
               $(this).remove();
 
@@ -263,7 +263,7 @@
 };
 
 $(document).ready(function(){
-  $('.mdp .materialboxed').materialbox();
+  $('.mdp .pmab-materialboxed').materialbox();
 });
 
 }( jQuery ));

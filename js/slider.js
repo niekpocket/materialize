@@ -16,21 +16,21 @@
         // For each slider, we want to keep track of
         // which slide is active and its associated content
         var $this = $(this);
-        var $slider = $this.find('ul.slides').first();
+        var $slider = $this.find('ul.pmab-slides').first();
         var $slides = $slider.find('li');
-        var $active_index = $slider.find('.active').index();
+        var $active_index = $slider.find('.pmab-active').index();
         var $active, $indicators, $interval;
         if ($active_index != -1) { $active = $slides.eq($active_index); }
 
         // Transitions the caption depending on alignment
         function captionTransition(caption, duration) {
-          if (caption.hasClass("center-align")) {
+          if (caption.hasClass("pmab-center-align")) {
             caption.velocity({opacity: 0, translateY: -100}, {duration: duration, queue: false});
           }
-          else if (caption.hasClass("right-align")) {
+          else if (caption.hasClass("pmab-right-align")) {
             caption.velocity({opacity: 0, translateX: 100}, {duration: duration, queue: false});
           }
-          else if (caption.hasClass("left-align")) {
+          else if (caption.hasClass("pmab-left-align")) {
             caption.velocity({opacity: 0, translateX: -100}, {duration: duration, queue: false});
           }
         }
@@ -41,41 +41,41 @@
           if (index >= $slides.length) index = 0;
           else if (index < 0) index = $slides.length -1;
 
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
 
           // Only do if index changes
           if ($active_index != index) {
             $active = $slides.eq($active_index);
-            $caption = $active.find('.caption');
+            $caption = $active.find('.pmab-caption');
 
-            $active.removeClass('active');
+            $active.removeClass('pmab-active');
             $active.velocity({opacity: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad',
                               complete: function() {
-                                $slides.not('.active').velocity({opacity: 0, translateX: 0, translateY: 0}, {duration: 0, queue: false});
+                                $slides.not('.pmab-active').velocity({opacity: 0, translateX: 0, translateY: 0}, {duration: 0, queue: false});
                               } });
             captionTransition($caption, options.transition);
 
 
             // Update indicators
             if (options.indicators) {
-              $indicators.eq($active_index).removeClass('active');
+              $indicators.eq($active_index).removeClass('pmab-active');
             }
 
             $slides.eq(index).velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
-            $slides.eq(index).find('.caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, delay: options.transition, queue: false, easing: 'easeOutQuad'});
-            $slides.eq(index).addClass('active');
+            $slides.eq(index).find('.pmab-caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, delay: options.transition, queue: false, easing: 'easeOutQuad'});
+            $slides.eq(index).addClass('pmab-active');
 
 
             // Update indicators
             if (options.indicators) {
-              $indicators.eq(index).addClass('active');
+              $indicators.eq(index).addClass('pmab-active');
             }
           }
         }
 
         // Set height of slider
         // If fullscreen, do nothing
-        if (!$this.hasClass('fullscreen')) {
+        if (!$this.hasClass('pmab-fullscreen')) {
           if (options.indicators) {
             // Add height if indicators are present
             $this.height(options.height + 40);
@@ -88,7 +88,7 @@
 
 
         // Set initial positions of captions
-        $slides.find('.caption').each(function () {
+        $slides.find('.pmab-caption').each(function () {
           captionTransition($(this), 0);
         });
 
@@ -103,9 +103,9 @@
 
         // dynamically add indicators
         if (options.indicators) {
-          $indicators = $('<ul class="indicators"></ul>');
+          $indicators = $('<ul class="pmab-indicators"></ul>');
           $slides.each(function( index ) {
-            var $indicator = $('<li class="indicator-item"></li>');
+            var $indicator = $('<li class="pmab-indicator-item"></li>');
 
             // Handle clicks on indicators
             $indicator.click(function () {
@@ -117,7 +117,7 @@
               clearInterval($interval);
               $interval = setInterval(
                 function(){
-                  $active_index = $slider.find('.active').index();
+                  $active_index = $slider.find('.pmab-active').index();
                   if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
                   else $active_index += 1;
 
@@ -129,33 +129,33 @@
             $indicators.append($indicator);
           });
           $this.append($indicators);
-          $indicators = $this.find('ul.indicators').find('li.indicator-item');
+          $indicators = $this.find('ul.pmab-indicators').find('li.pmab-indicator-item');
         }
 
         if ($active) {
           $active.show();
         }
         else {
-          $slides.first().addClass('active').velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
+          $slides.first().addClass('pmab-active').velocity({opacity: 1}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
 
           $active_index = 0;
           $active = $slides.eq($active_index);
 
           // Update indicators
           if (options.indicators) {
-            $indicators.eq($active_index).addClass('active');
+            $indicators.eq($active_index).addClass('pmab-active');
           }
         }
 
         // Adjust height to current slide
         $active.find('img').each(function() {
-          $active.find('.caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
+          $active.find('.pmab-caption').velocity({opacity: 1, translateX: 0, translateY: 0}, {duration: options.transition, queue: false, easing: 'easeOutQuad'});
         });
 
         // auto scroll
         $interval = setInterval(
           function(){
-            $active_index = $slider.find('.active').index();
+            $active_index = $slider.find('.pmab-active').index();
             moveToSlide($active_index + 1);
 
           }, options.transition + options.interval
@@ -249,7 +249,7 @@
             clearInterval($interval);
             $interval = setInterval(
               function(){
-                $active_index = $slider.find('.active').index();
+                $active_index = $slider.find('.pmab-active').index();
                 if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
                 else $active_index += 1;
 
@@ -268,7 +268,7 @@
           clearInterval($interval);
           $interval = setInterval(
             function(){
-              $active_index = $slider.find('.active').index();
+              $active_index = $slider.find('.pmab-active').index();
               if ($slides.length == $active_index + 1) $active_index = 0; // loop to start
               else $active_index += 1;
 
@@ -279,12 +279,12 @@
         });
 
         $this.on('sliderNext', function() {
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
           moveToSlide($active_index + 1);
         });
 
         $this.on('sliderPrev', function() {
-          $active_index = $slider.find('.active').index();
+          $active_index = $slider.find('.pmab-active').index();
           moveToSlide($active_index - 1);
         });
 

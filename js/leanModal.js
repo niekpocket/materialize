@@ -22,7 +22,7 @@
       },
       overlayID = _generateID(),
       $modal = $(this),
-      $overlay = $('<div class="lean-overlay"></div>'),
+      $overlay = $('<div class="pmab-lean-overlay"></div>'),
       lStack = (++_stack);
 
       // Store a reference of the overlay
@@ -50,7 +50,7 @@
         });
       }
 
-      $modal.find(".modal-close").on('click.close', function(e) {
+      $modal.find(".pmab-modal-close").on('click.close', function(e) {
         $modal.closeModal(options);
       });
 
@@ -65,7 +65,7 @@
       $modal.data('associated-overlay', $overlay[0]);
 
       // Define Bottom Sheet animation
-      if ($modal.hasClass('bottom-sheet')) {
+      if ($modal.hasClass('pmab-bottom-sheet')) {
         $modal.velocity({bottom: "0", opacity: 1}, {
           duration: options.in_duration,
           queue: false,
@@ -113,14 +113,14 @@
       // Disable scrolling
       $('body').css('overflow', '');
 
-      $modal.find('.modal-close').off('click.close');
+      $modal.find('.pmab-modal-close').off('click.close');
       $(document).off('keyup.leanModal' + overlayID);
 
       $overlay.velocity( { opacity: 0}, {duration: options.out_duration, queue: false, ease: "easeOutQuart"});
 
 
       // Define Bottom Sheet animation
-      if ($modal.hasClass('bottom-sheet')) {
+      if ($modal.hasClass('pmab-bottom-sheet')) {
         $modal.velocity({bottom: "-100%", opacity: 0}, {
           duration: options.out_duration,
           queue: false,

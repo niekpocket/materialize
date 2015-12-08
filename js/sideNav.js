@@ -19,7 +19,7 @@
         }
 
         // Add Touch Area
-        var dragTarget = $('<div class="drag-target"></div>');
+        var dragTarget = $('<div class="pmab-drag-target"></div>');
         $('body').append(dragTarget);
 
         if (options.edge == 'left') {
@@ -27,21 +27,21 @@
           dragTarget.css({'left': 0}); // Add Touch Area
         }
         else {
-          menu_id.addClass('right-aligned') // Change text-alignment to right
+          menu_id.addClass('pmab-right-aligned') // Change text-alignment to right
             .css('right', -1 * (options.menuWidth + 10))
             .css('left', '');
           dragTarget.css({'right': 0}); // Add Touch Area
         }
 
         // If fixed sidenav, bring menu out
-        if (menu_id.hasClass('fixed')) {
+        if (menu_id.hasClass('pmab-fixed')) {
             if (window.innerWidth > 992) {
               menu_id.css('left', 0);
             }
           }
 
         // Window resize to reset on large screens fixed
-        if (menu_id.hasClass('fixed')) {
+        if (menu_id.hasClass('pmab-fixed')) {
           $(window).resize( function() {
             if (window.innerWidth > 992) {
               // Close menu if window is resized bigger than 992 and user has fixed sidenav
@@ -65,7 +65,7 @@
 
         // if closeOnClick, then add close event for all a tags in side sideNav
         if (options.closeOnClick === true) {
-          menu_id.on("click.itemclick", "a:not(.collapsible-header)", function(){
+          menu_id.on("click.itemclick", "a:not(.pmab-collapsible-header)", function(){
             removeMenu();
           });
         }
@@ -144,7 +144,7 @@
 
             // If overlay does not exist, create one and if it is clicked, close menu
             if ($('#sidenav-overlay').length === 0) {
-              var overlay = $('<div id="sidenav-overlay"></div>');
+              var overlay = $('<div id="pmab-sidenav-overlay"></div>');
               overlay.css('opacity', 0).click( function(){
                 removeMenu();
               });
@@ -266,7 +266,7 @@
                 menu_id.css('left','');
               }
 
-              var overlay = $('<div id="sidenav-overlay"></div>');
+              var overlay = $('<div id="pmab-sidenav-overlay"></div>');
               overlay.css('opacity', 0)
               .click(function(){
                 menuOut = false;

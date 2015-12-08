@@ -10,7 +10,7 @@
           window_width = $(window).width();
 
       $this.width('100%');
-      var $active, $content, $links = $this.find('li.tab a'),
+      var $active, $content, $links = $this.find('li.pmab-tab a'),
           $tabs_width = $this.width(),
           $tab_width = $this.find('li').first().outerWidth(),
           $index = 0;
@@ -20,13 +20,13 @@
 
       // If no match is found, use the first link or any with class 'active' as the initial active tab.
       if ($active.length === 0) {
-          $active = $(this).find('li.tab a.active').first();
+          $active = $(this).find('li.pmba-tab a.pmab-active').first();
       }
       if ($active.length === 0) {
-        $active = $(this).find('li.tab a').first();
+        $active = $(this).find('li.pmab-tab a').first();
       }
 
-      $active.addClass('active');
+      $active.addClass('pmab-active');
       $index = $links.index($active);
       if ($index < 0) {
         $index = 0;
@@ -35,8 +35,8 @@
       $content = $($active[0].hash);
 
       // append indicator then set indicator width to tab width
-      $this.append('<div class="indicator"></div>');
-      var $indicator = $this.find('.indicator');
+      $this.append('<div class="pmab-indicator"></div>');
+      var $indicator = $this.find('.pmab-indicator');
       if ($this.is(":visible")) {
         $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
         $indicator.css({"left": $index * $tab_width});
@@ -61,7 +61,7 @@
 
       // Bind the click event handler
       $this.on('click', 'a', function(e) {
-        if ($(this).parent().hasClass('disabled')) {
+        if ($(this).parent().hasClass('pmab-disabled')) {
           e.preventDefault();
           return;
         }
@@ -70,16 +70,16 @@
         $tab_width = $this.find('li').first().outerWidth();
 
         // Make the old tab inactive.
-        $active.removeClass('active');
+        $active.removeClass('pmab-active');
         $content.hide();
 
         // Update the variables with the new link and content
         $active = $(this);
         $content = $(this.hash);
-        $links = $this.find('li.tab a');
+        $links = $this.find('li.pmab-tab a');
 
         // Make the tab active.
-        $active.addClass('active');
+        $active.addClass('pmab-active');
         var $prev_index = $index;
         $index = $links.index($(this));
         if ($index < 0) {
@@ -124,6 +124,6 @@
   };
 
   $(document).ready(function(){
-    $('.mdp ul.tabs').tabs();
+    $('.mdp ul.pmab-tabs').tabs();
   });
 }( jQuery ));
